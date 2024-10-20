@@ -9,3 +9,4 @@ pyvenv.cfg
 .env
 .venv
 pip-selfcheck.json
+__pycache__
