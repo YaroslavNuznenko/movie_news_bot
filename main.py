@@ -1,28 +1,29 @@
+import asyncio
+import logging
 import os
+import sys
 
+from aiogram import Bot, Dispatcher
+from aiogram.client.default import DefaultBotProperties
+from aiogram.enums import ParseMode
 from dotenv import load_dotenv
 
-from geolocation import nominatim_search_geolocation
-from weather_forecast import WeatherAPI
+from chat import settings_router
+
+load_dotenv()
+
+TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 
 
-def main():
-    load_dotenv()
+async def main() -> None:
+    bot = Bot(token=TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
 
-    city = "Київ"
-    location = nominatim_search_geolocation(city)
+    dp = Dispatcher()
+    dp.include_router(settings_router)
 
-    if location is None or "lat" not in location or "lon" not in location:
-        print(f"Could not find location for the {city}")
-        return
-
-    weather_api_key = os.getenv("WEATHER_API_KEY")
-    weather_api = WeatherAPI(weather_api_key)
-
-    days = 7
-    avg_temp = weather_api.get_avg_temperature(**location, days=days)
-    print(f"Avg temperature in {city} for the next {days} days is {avg_temp}°C")  # noqa
+    await dp.start_polling(bot)
 
 
 if __name__ == "__main__":
-    main()
+    logging.basicConfig(level=logging.INFO, stream=sys.stdout)
+    asyncio.run(main())

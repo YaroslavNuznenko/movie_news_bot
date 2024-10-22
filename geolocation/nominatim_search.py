@@ -1,13 +1,17 @@
-import requests
+import httpx
+
+from .location import Location
 
 BASE_URL = "https://nominatim.openstreetmap.org/search"
 USER_AGENT = "TieTimeBot/1.0"
 
 
-def nominatim_search_geolocation(q):
+async def nominatim_search_geolocation(q: str) -> Location:
     params = {"q": q, "format": "json", "limit": 1}
     headers = {"User-Agent": USER_AGENT}
-    response = requests.get(BASE_URL, params=params, headers=headers)
+
+    async with httpx.AsyncClient() as client:
+        response = await client.get(BASE_URL, params=params, headers=headers)
 
     if response.status_code != 200:
         return
