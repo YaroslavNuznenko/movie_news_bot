@@ -1,1 +1,2 @@
-from .nominatim_search import nominatim_search_geolocation  # noqa
+from .location import *  # noqa
+from .nominatim_search import *  # noqa

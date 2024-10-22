@@ -1,1 +1,1 @@
-from .weather_api import WeatherAPI  # noqa
+from .weather_api import *  # noqa
