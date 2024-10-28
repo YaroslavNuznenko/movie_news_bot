@@ -1,4 +1,3 @@
-from os import getenv
 from typing import Dict
 
 from aiogram import F, Router
@@ -7,8 +6,8 @@ from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.types import KeyboardButton, Message, ReplyKeyboardMarkup, ReplyKeyboardRemove
 
-from geolocation import nominatim_search_geolocation
-from weather_forecast import WeatherAPI
+from location import LocationAPI
+from weather_forecast import WeatherForecastAPI
 
 settings_router = Router()
 
@@ -59,10 +58,12 @@ async def process_location_with_place(message: Message, state: FSMContext) -> No
 
 
 @settings_router.message(Settings.place_location)
-async def process_place_location(message: Message, state: FSMContext) -> None:
+async def process_place_location(
+    message: Message, state: FSMContext, location_api: LocationAPI, weather_forecast_api: WeatherForecastAPI
+) -> None:
     q = message.text.strip()
 
-    location = await nominatim_search_geolocation(q)  # TODO: use dependency injection
+    location = await location_api.search(q)
 
     if location is None:
         await message.answer("Location not found, please, try again.")
@@ -70,15 +71,14 @@ async def process_place_location(message: Message, state: FSMContext) -> None:
 
     await state.clear()
 
-    await show_avg_temperature(message, {"location": location})
+    await show_avg_temperature(message, weather_forecast_api, {"location": location})
 
 
-async def show_avg_temperature(message: Message, data=Dict[str, any]) -> None:
+async def show_avg_temperature(message: Message, weather_forecast_api: WeatherForecastAPI, data=Dict[str, any]) -> None:
     days = 7
     location = data["location"]
 
-    weatherAPI = WeatherAPI(getenv("WEATHER_API_KEY"))  # TODO: use dependency injection
-    avg_temperature = await weatherAPI.get_avg_temperature(location, days)
+    avg_temperature = await weather_forecast_api.get_avg_temperature(location, days)
 
     await message.answer(
         f"Average temperature for the next {days} days: {avg_temperature:.1f}°C", reply_markup=ReplyKeyboardRemove()

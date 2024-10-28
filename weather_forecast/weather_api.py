@@ -1,6 +1,6 @@
-import httpx
+from httpx import AsyncClient
 
-from geolocation import Location
+from location import Location
 
 from .weather_forecast_api import WeatherForecastAPI
 
@@ -20,7 +20,7 @@ class WeatherAPI(WeatherForecastAPI):
             "days": days,
         }
 
-        async with httpx.AsyncClient() as client:
+        async with AsyncClient() as client:
             response = await client.get(BASE_URL, params=params)
             data = response.json()
 
