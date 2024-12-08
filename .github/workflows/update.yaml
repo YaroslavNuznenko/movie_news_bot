@@ -1,7 +1,6 @@
 name: Update datasets
 
 on:
-  workflow_dispatch:
   schedule:
     # Each hour https://crontab.guru
     - cron: "*/1 * * * *"
