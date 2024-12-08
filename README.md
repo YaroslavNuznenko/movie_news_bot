@@ -1,14 +1,10 @@
-# TireTimeBot (@tire_time_bot)
+# MOVIEW NEWS BOT (@movie_news_bot)
 
 ## Main Idea
 
-TireTimeBot is Telegram bot designed to help drivers stay safe on the road by providing timely reminders about when to change their tires from summer to winter and vice versa, based on the upcoming weather forecast.
+Movie news bot is design to add ability read movie news from different web sites in one place, with automatically every hour delivery.
 
 ### Features
 
-- Automated Weather Monitoring: TireTimeBot tracks the weather forecast for the coming week in the user’s location to determine when conditions require winter or summer tires.
-- Timely Notifications: Users receive a notification when it’s time to switch from summer tires to winter tires (and vice versa), giving them enough time to schedule a tire change.
-
-## Workflow Diagram
-
-![Workflow Diagram](./docs/assets/TireTimeBot.drawio.png)
+- Track news: bot tracks the appearance of news on major news sites.
+- Translation: bot translate news titles for ukrainian users
