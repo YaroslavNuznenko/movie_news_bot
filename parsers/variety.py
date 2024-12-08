@@ -38,7 +38,7 @@ async def fetch_articles(bot):
                     message = f"🔹 Original: {text}\n\nПереклад: {translated}\n\n{link['href']}"
                     print("-" * 80)
                     
-                    if minutes < 60:  # Check if news posted 
+                    if minutes < 30:  # Check if news posted 
                         fresh_news.append(message)
             except ValueError:
                 break
