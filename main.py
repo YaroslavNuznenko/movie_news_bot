@@ -21,7 +21,7 @@ bot = Bot(token=BOT_TOKEN)
 
 
 async def main() -> None:
-   # await variety.fetch_articles(bot)
+   await variety.fetch_articles(bot)
    await indiewire.fetch_articles(bot)
 
 if __name__ == "__main__":
