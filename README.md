@@ -2,9 +2,11 @@
 
 ## Main Idea
 
-Movie news bot is design to add ability read movie news from different web sites in one place, with automatically every hour delivery.
+Movie news bot is design to add ability send movie news from different web sites hourly in one Telegram channel.
+Crontab for this project now running in Gihub Actions
 
 ### Features
 
-- Track news: bot tracks the appearance of news on major news sites and deliver it to one telegram channel.
+- Track news: bot tracks the appearance of news on major movie news sites and deliver it to one telegram channel.
+  (Support: Variety, Indiwire)
 - Translation: bot translate news titles for ukrainian users

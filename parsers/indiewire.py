@@ -1,6 +1,9 @@
 import requests
 import os
+from datetime import datetime, timedelta
+import pytz 
 
+from dateutil import parser 
 from deep_translator import GoogleTranslator
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
@@ -19,29 +22,25 @@ async def fetch_articles(bot):
         soup = BeautifulSoup(response.text, 'html.parser')
 
         fresh_news = []
-        articles = soup.find_all('li', class_='o-tease-list__item')
+        articles = soup.find_all('div', attrs={"data-alias" : "card__main"})
         for article in articles:
-            title = article.find('h3', class_='c-title')
+            title = article.find('div', attrs={"data-alias" : "card__card-title"})
             headline = title.find('a')
-            link = article.find('a', href=True)
+            time = article.find('time',attrs={"data-alias" : "card_timestamp"})
+          
+            if time is not None:
+                timeValue = time['datetime']
+                kiev_tz = pytz.timezone("Europe/Kiev")
+                pattern_datetime = datetime.strptime(timeValue, '%Y-%m-%d %H:%M:%S.%f%z').astimezone(kiev_tz)
+                current_datetime = datetime.now(kiev_tz)
 
-            time = article.find('time', class_='c-timestamp')
-            timeText = time.get_text(strip=True)
-            minutesValue = timeText.split(' mins')[0]
+                time_difference = (current_datetime - pattern_datetime).total_seconds()  / 3600 # one hour check
 
-            try:
-                num = int(minutesValue)  
-                minutes = int(minutesValue)
-                if headline and link and minutes:
+                if time_difference < 1:
                     text = headline.get_text(strip=True)
                     translated = GoogleTranslator(source='en', target='ukrainian').translate(text=text)
-                    message = f"🔹 Original: {text}\n\nПереклад: {translated}\n\n{link['href']}"
-                    print("-" * 80)
-                    
-                    if minutes < 30:  # Check if news posted 
-                        fresh_news.append(message)
-            except ValueError:
-                break
+                    message = f"🔹 Original: {text}\n\nПереклад: {translated}\n\n{headline['href']}"
+                    fresh_news.append(message)
 
         if fresh_news:
             for news_item in fresh_news:
