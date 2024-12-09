@@ -1,9 +1,9 @@
-name: Update datasets
+name: Set messages
 
 on:
+  workflow_dispatch:
   schedule:
-    # Each hour https://crontab.guru
-    - cron: "*/30 * * * *"
+    - cron: "0 * * * *"
 
 jobs:
   build:
@@ -20,5 +20,5 @@ jobs:
           cache: "pip" # caching pip dependencies
       - name: Install requirements
         run: pip install -r requirements.txt
-      - name: Build reports
+      - name: Run script
         run: python main.py
