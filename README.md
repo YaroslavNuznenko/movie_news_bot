@@ -10,3 +10,19 @@ Crontab for this project now running in Gihub Actions
 - Track news: bot tracks the appearance of news on major movie news sites and deliver it to one telegram channel.
   (Support: Variety, Indiwire)
 - Translation: bot translate news titles for ukrainian users
+
+### Live demo
+
+Telegram:@movie_news_bot
+
+### How to run
+
+#### Install requirements
+
+pip install -r requirements.txt
+
+#### Connect to your own telegram bot and channel and add envs
+
+#### Run script
+
+python main.py
