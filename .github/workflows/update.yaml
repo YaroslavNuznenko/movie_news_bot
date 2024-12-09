@@ -1,4 +1,4 @@
-name: Set messages
+name: Send messages
 
 on:
   workflow_dispatch:
