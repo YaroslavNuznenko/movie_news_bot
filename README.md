@@ -1,4 +1,4 @@
-# MOVIE NEWS BOT (@movie_news_bot) used on Channel (@movie_news_ua)
+## MOVIE NEWS BOT (@movie_news_bot) used on Channel (@movie_news_ua)
 
 ## Main Idea
 
