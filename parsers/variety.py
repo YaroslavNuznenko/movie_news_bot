@@ -36,7 +36,6 @@ async def fetch_articles(bot):
                     text = headline.get_text(strip=True)
                     translated = GoogleTranslator(source='en', target='ukrainian').translate(text=text)
                     message = f"🔹 Original: {text}\n\nПереклад: {translated}\n\n{link['href']}"
-                    print("-" * 80)
                     
                     if minutes < 60:  # one hour check
                         fresh_news.append(message)
